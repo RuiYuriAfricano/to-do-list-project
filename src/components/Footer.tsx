@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
               Na TaskMaster +, estamos dedicados a ajudar você a se manter organizado, focado e alcançar seus objetivos. Oferecemos uma plataforma amigável para gerenciar suas tarefas de forma eficaz, priorizar seu trabalho e progredir em direção aos seus objetivos. Deixe-nos ser seu companheiro em sua jornada rumo ao sucesso.
             </p>
           </div>
-          <a href="https://github.com/fernandoleano" className="text-gray-400 hover:text-white mt-4 md:mt-0">
+          <a href="https://github.com/RuiYuriAfricano" className="text-gray-400 hover:text-white mt-4 md:mt-0">
             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
               <path
                 fillRule="evenodd"
