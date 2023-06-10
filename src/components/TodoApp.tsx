@@ -62,6 +62,22 @@ const TodoApp: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [quote, setQuote] = useState({ q: '', a: '' });
 
+
+  useEffect(() => {
+    if (todos.length)
+      localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
+
+  useEffect(() => {
+    const dados: string = localStorage.getItem('todos') + ''
+
+    if (dados !== 'null') {
+      setTodos(JSON.parse(dados));
+    }
+
+  }, [])
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
@@ -107,17 +123,21 @@ const TodoApp: React.FC = () => {
   const completedTodos = todos.filter(todo => todo.completed).length;
 
   return (
-    <div className="bg-gray-900 min-h-screen flex flex-col justify-center items-center">
-      <div className="max-w-lg w-full mx-4 p-4 bg-gray-800 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold text-white mb-4">TaskMaster +</h1>
+    <div className="body-text bg-gray-900 min-h-screen flex flex-col justify-center items-center">
+      <div className="body-card max-w-lg w-full mx-4 p-4 bg-gray-800 rounded-lg shadow-lg">
+        <h1 className="dark-text  text-2xl font-bold text-white mb-4">Gestor de tarefa</h1>
         <div className="flex mb-4">
           <input
             type="text"
             value={inputText}
             onChange={handleInputChange}
-            className="flex-grow bg-gray-700 text-white placeholder-gray-400 border-gray-400 border-2 p-2 rounded-l-md focus:outline-none"
+            className="input-text flex-grow bg-gray-700 text-white placeholder-gray-400 border-gray-400 border-2 p-2 rounded-l-md focus:outline-none"
             placeholder="Escreve uma nova tarefa..."
-          />
+            onKeyUp={(e) => {
+              if (e.code === "Enter") {
+                handleAddTodo();
+              }
+            }} />
           <button
             onClick={handleAddTodo}
             className="bg-blue-500 text-white px-4 rounded-r-md hover:bg-blue-600 focus:outline-none"
@@ -129,7 +149,7 @@ const TodoApp: React.FC = () => {
           {todos.map(todo => (
             <li
               key={todo.id}
-              className={`flex items-center bg-gray-700 p-3 rounded-md ${todo.completed ? 'text-gray-500 line-through' : 'text-white'
+              className={`li-card flex items-center bg-gray-700 p-3 rounded-md ${todo.completed ? 'text-gray-500 line-through' : 'text-white'
                 }`}
             >
               <span className="flex-grow">{todo.text}</span>
@@ -150,12 +170,12 @@ const TodoApp: React.FC = () => {
             </li>
           ))}
         </ul>
-        <div className="mt-8 text-white">
+        <div className="dark-text  mt-8 text-white">
           <p>
             Tarefas por fazer: {totalTodos} | Tarefas Completadas: {completedTodos}
           </p>
           <p className="mt-2">
-            <em>"{quote.q}"</em> - {quote.a}
+
           </p>
         </div>
       </div>

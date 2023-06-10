@@ -2,13 +2,13 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <footer className="footer bg-gray-800">
+      <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="text-center md:text-left">
-            <h4 className="text-lg font-semibold text-white mb-2">Nossa Missão</h4>
+            <h4 className="footer-title text-lg font-semibold text-white mb-2">Nossa Missão</h4>
             <p className="text-sm text-gray-400">
-              Na TaskMaster +, estamos dedicados a ajudar você a se manter organizado, focado e alcançar seus objetivos. Oferecemos uma plataforma amigável para gerenciar suas tarefas de forma eficaz, priorizar seu trabalho e progredir em direção aos seus objetivos. Deixe-nos ser seu companheiro em sua jornada rumo ao sucesso.
+              No Gestor Tarefas, estamos dedicados a ajudar você a se manter organizado, focado e alcançar seus objetivos. Oferecemos uma plataforma amigável para gerenciar suas tarefas de forma eficaz, priorizar seu trabalho e progredir em direção aos seus objetivos. Deixe-nos ser seu companheiro em sua jornada rumo ao sucesso.
             </p>
           </div>
           <a href="https://github.com/RuiYuriAfricano" className="text-gray-400 hover:text-white mt-4 md:mt-0">
