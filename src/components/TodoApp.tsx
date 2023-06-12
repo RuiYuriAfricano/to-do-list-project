@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 interface Todo {
   id: number;
   text: string;
+  categ: string;
   completed: boolean;
 }
 
@@ -60,13 +61,15 @@ const quotes = [
 const TodoApp: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputText, setInputText] = useState('');
+  const [select, setSelect] = useState('0');
   const [quote, setQuote] = useState({ q: '', a: '' });
-
+  const [inserir, setInserir] = useState();
 
   useEffect(() => {
     if (todos.length)
       localStorage.setItem('todos', JSON.stringify(todos))
-  }, [todos])
+    setInserir()
+  }, [inserir])
 
   useEffect(() => {
     const dados: string = localStorage.getItem('todos') + ''
@@ -81,17 +84,59 @@ const TodoApp: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
+  const handleInputChange1 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelect(e.target.value);
+  };
+
+
+  //listar por categoria
+  const handleSortByCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const category = e.target.value;
+
+    const dados: string = localStorage.getItem('todos') + '';
+
+    if (dados !== 'null') {
+      setTodos(JSON.parse(dados));
+    }
+
+    if (category !== '0' && category !== "TODAS") {
+      setTodos(prevTodos => {
+        const sortedTodos = [...prevTodos].sort((a, b) => {
+          if (a.categ < b.categ) {
+            return -1;
+          } else if (a.categ > b.categ) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        const filteredTodos = sortedTodos.filter(todo => todo.categ === category);
+
+        return filteredTodos;
+      });
+    }
+  };
+
+
 
   const handleAddTodo = () => {
-    if (inputText.trim() !== '') {
+    if (inputText.trim() === '')
+      alert("Deves inserir a designação da tarefa");
+    else if (select === '0')
+      alert("Deves selecionar uma categoria");
+
+    else {
       const newTodo: Todo = {
         id: Date.now(),
         text: inputText,
+        categ: select,
         completed: false,
       };
-
+      setInserir("sim");
       setTodos([...todos, newTodo]);
       setInputText('');
+
     }
   };
 
@@ -99,6 +144,7 @@ const TodoApp: React.FC = () => {
     setTodos(prevTodos =>
       prevTodos.map(todo => {
         if (todo.id === id) {
+          setInserir("sim");
           return { ...todo, completed: !todo.completed };
         }
         return todo;
@@ -108,6 +154,8 @@ const TodoApp: React.FC = () => {
 
   const handleDeleteTodo = (id: number) => {
     setTodos(todos.filter(todo => todo.id !== id));
+    setInserir("sim");
+
   };
 
   useEffect(() => {
@@ -138,6 +186,21 @@ const TodoApp: React.FC = () => {
                 handleAddTodo();
               }
             }} />
+          <select className="input-text flex-grow bg-gray-700 text-white placeholder-gray-400 border-gray-400 border-2 p-2 rounded-l-md focus:outline-none"
+            onChange={handleInputChange1} value={select}>
+            <option value='0'>
+              Categoria
+            </option>
+            <option value="A">
+              A
+            </option>
+            <option value="B">
+              B
+            </option>
+            <option value="C">
+              C
+            </option>
+          </select>
           <button
             onClick={handleAddTodo}
             className="bg-blue-500 text-white px-4 rounded-r-md hover:bg-blue-600 focus:outline-none"
@@ -152,7 +215,7 @@ const TodoApp: React.FC = () => {
               className={`li-card flex items-center bg-gray-700 p-3 rounded-md ${todo.completed ? 'text-gray-500 line-through' : 'text-white'
                 }`}
             >
-              <span className="flex-grow">{todo.text}</span>
+              <span className="flex-grow">{todo.text} - {todo.categ}</span>
               {!todo.completed ? (
                 <button
                   onClick={() => handleToggleComplete(todo.id)}
@@ -173,6 +236,24 @@ const TodoApp: React.FC = () => {
         <div className="dark-text  mt-8 text-white">
           <p>
             Tarefas por fazer: {totalTodos} | Tarefas Completadas: {completedTodos}
+            <select className="input-text me-0 mt-2 flex-grow bg-gray-700 text-white  border-gray-400 border-2 p-2 rounded-l-md focus:outline-none"
+              onChange={handleSortByCategory}>
+              <option value='0'>
+                Lista/Categoria
+              </option>
+              <option value="A">
+                A
+              </option>
+              <option value="B">
+                B
+              </option>
+              <option value="C">
+                C
+              </option>
+              <option value="TODAS">
+                Todas Categorias
+              </option>
+            </select>
           </p>
           <p className="mt-2">
 
