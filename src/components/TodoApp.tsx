@@ -99,7 +99,7 @@ const TodoApp: React.FC = () => {
       setTodos(JSON.parse(dados));
     }
 
-    if (category !== '0' && category !== "TODAS") {
+    if (category !== "TODAS") {
       setTodos(prevTodos => {
         const sortedTodos = [...prevTodos].sort((a, b) => {
           if (a.categ < b.categ) {
@@ -186,10 +186,19 @@ const TodoApp: React.FC = () => {
                 handleAddTodo();
               }
             }} />
+          <button
+            onClick={handleAddTodo}
+            className="bg-blue-500 text-white px-4 rounded-r-md hover:bg-blue-600 focus:outline-none"
+          >
+            Adicionar
+          </button>
+        </div>
+        <div className="flex mb-4">
+
           <select className="input-text flex-grow bg-gray-700 text-white placeholder-gray-400 border-gray-400 border-2 p-2 rounded-l-md focus:outline-none"
             onChange={handleInputChange1} value={select}>
             <option value='0'>
-              Categoria
+              Inserir Categoria
             </option>
             <option value="A">
               A
@@ -201,13 +210,28 @@ const TodoApp: React.FC = () => {
               C
             </option>
           </select>
-          <button
-            onClick={handleAddTodo}
-            className="bg-blue-500 text-white px-4 rounded-r-md hover:bg-blue-600 focus:outline-none"
-          >
-            Adicionar
-          </button>
+          <select className="input-text ml-2 mt-0 flex-grow bg-gray-800 text-white  border-gray-400 border-0 p-2 rounded-l-md focus:outline-none"
+            onChange={handleSortByCategory}>
+            <option value="TODAS">
+              Todas Categorias
+            </option>
+            <option value="A">
+              Categoria A
+            </option>
+            <option value="B">
+              Categoria B
+            </option>
+            <option value="C">
+              Categoria C
+            </option>
+
+          </select>
         </div>
+        <div className="flex mb-4 w-40">
+
+
+        </div>
+
         <ul className="space-y-2">
           {todos.map(todo => (
             <li
@@ -236,29 +260,13 @@ const TodoApp: React.FC = () => {
         <div className="dark-text  mt-8 text-white">
           <p>
             Tarefas por fazer: {totalTodos} | Tarefas Completadas: {completedTodos}
-            <select className="input-text me-0 mt-2 flex-grow bg-gray-700 text-white  border-gray-400 border-2 p-2 rounded-l-md focus:outline-none"
-              onChange={handleSortByCategory}>
-              <option value='0'>
-                Lista/Categoria
-              </option>
-              <option value="A">
-                A
-              </option>
-              <option value="B">
-                B
-              </option>
-              <option value="C">
-                C
-              </option>
-              <option value="TODAS">
-                Todas Categorias
-              </option>
-            </select>
+
           </p>
           <p className="mt-2">
 
           </p>
         </div>
+
       </div>
     </div>
   );
