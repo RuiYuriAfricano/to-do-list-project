@@ -1,6 +1,6 @@
-# to-do-list-project
+# Gestor de Tarefas
 
-Projeto de Gestão de tarefas
+Projeto de Engenharia de Software III, Gestão de tarefas
 
 # Funcionalidades
 
